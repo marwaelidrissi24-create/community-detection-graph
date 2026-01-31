@@ -1,33 +1,52 @@
-# code/louvain.py
-
-import networkx as nx
-import matplotlib.pyplot as plt
+# Louvain community detection
 import pickle
-import community as community_louvain  # pip install python-louvain
+import networkx as nx
+import community.community_louvain as community_louvain
+import matplotlib.pyplot as plt
+import os
 
-# 1️⃣ Charger le graphe créé par P2
-with open("../data/social_graph.pkl", "rb") as f:
+# 1️⃣ Load the graph created by P2
+with open("data/social_graph.pkl", "rb") as f:
     G = pickle.load(f)
 
-# 2️⃣ Appliquer l'algorithme Louvain
+print("Graph loaded")
+print("Nodes:", G.number_of_nodes())
+print("Edges:", G.number_of_edges())
+
+# 2️⃣ Apply Louvain algorithm
 partition = community_louvain.best_partition(G)
 
-# 3️⃣ Afficher les communautés détectées
-print("Communautés détectées :")
-for node, comm in partition.items():
-    print(f"{node} -> Communauté {comm}")
+# partition = {node: community_id}
+num_communities = len(set(partition.values()))
+print("Number of detected communities:", num_communities)
 
-# 4️⃣ Calculer la modularité
+# 3️⃣ Compute modularity
 modularity = community_louvain.modularity(partition, G)
-print(f"\nModularité du graphe : {modularity:.3f}")
+print("Modularity:", modularity)
 
-# 5️⃣ Visualiser le graphe avec les communautés
-plt.figure(figsize=(8,6))
+# 4️⃣ Display communities (text)
+print("\nCommunities:")
+communities = {}
+for node, comm in partition.items():
+    communities.setdefault(comm, []).append(node)
 
-# Couleurs par communauté
+for comm, nodes in communities.items():
+    print(f"Community {comm}: {nodes}")
+
+# 5️⃣ Visualization
+pos = nx.spring_layout(G, seed=42)
 colors = [partition[node] for node in G.nodes()]
-nx.draw(G, with_labels=True, node_color=colors, cmap=plt.cm.tab20, edge_color='gray', node_size=1000)
 
-plt.title("Communautés détectées avec Louvain")
-plt.savefig("../figures/louvain_communities.png")
+plt.figure(figsize=(10, 8))
+nx.draw(
+    G,
+    pos,
+    node_color=colors,
+    with_labels=True,
+    node_size=900,
+    cmap=plt.cm.Set3,
+    edge_color="gray"
+)
+plt.title("Community detection using Louvain algorithm")
+plt.savefig("figures/louvain_communities.png")
 plt.show()
