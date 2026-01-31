@@ -1,4 +1,6 @@
+
 # Import des librairies
+import pickle
 import networkx as nx
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -27,7 +29,6 @@ print("Degré moyen :", degre_moyen)
 print("Graphe orienté ?", G.is_directed())
 
 # 5️⃣ Sauvegarder le graphe pour P3 (pickle)
-import pickle
 os.makedirs("data", exist_ok=True)
 
 with open("data/social_graph.pkl", "wb") as f:
@@ -35,7 +36,8 @@ with open("data/social_graph.pkl", "wb") as f:
 
 # 6️⃣ Visualisation du graphe
 plt.figure(figsize=(10, 8))
-nx.draw(G, with_labels=True, node_color="lightblue", edge_color="gray", node_size=900)
+nx.draw(G, with_labels=True, node_color="lightblue",
+        edge_color="gray", node_size=900)
 plt.title("Graphe social")
 plt.savefig("figures/social_graph.png")
 plt.show()
