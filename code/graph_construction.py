@@ -1,4 +1,3 @@
-
 # Import des librairies
 import pickle
 import networkx as nx
