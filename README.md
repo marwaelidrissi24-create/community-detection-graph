@@ -14,10 +14,35 @@ Le graphe est généré à partir d’un dataset CSV représentant des relations
 Il s’agit d’un graphe simple et non orienté.
 
 ## Outils
-- Python
+- Python 3.8+
 - NetworkX
 - Matplotlib
 - Pandas
+- python-louvain
+
+## Installation
+
+1. Clonez le dépôt.
+2. Installez les dépendances :
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+## Utilisation
+
+Le projet se compose de deux scripts principaux à exécuter dans l'ordre :
+
+1. **Construction du graphe :**
+   ```bash
+   python code/graph_construction.py
+   ```
+   Ce script lit le fichier CSV, crée le graphe, calcule ses propriétés et le sauvegarde dans `data/social_graph.pkl`.
+
+2. **Détection de communautés :**
+   ```bash
+   python code/louvain.py
+   ```
+   Ce script charge le graphe sauvegardé, applique l'algorithme de Louvain et génère une visualisation dans `figures/louvain_communities.png`.
 
 ## Auteurs
 Projet réalisé par un groupe de 4 étudiants.

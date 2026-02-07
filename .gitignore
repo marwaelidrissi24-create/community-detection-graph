@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Data and Results
+data/social_graph.pkl
+figures/*.png
+
+# IDEs
+.vscode/
+.idea/
