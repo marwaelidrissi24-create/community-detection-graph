@@ -1,0 +1,8 @@
+# generated files
+figures/
+data/*.pkl
+*.png
+*.jpg
+*.jpeg
+*.pkl
+__pycache__/
